@@ -1,5 +1,5 @@
 # 论文查重系统依赖包
-# Python 3.7+ required
+# Python 3.13.3 required
 
 # 代码质量检查工具
 pylint>=2.15.0
@@ -17,9 +17,4 @@ pytest>=7.0.0
 pytest-cov>=4.0.0
 coverage>=6.0.0
 
-# 可选：更好的中文分词支持（如果需要）
-# jieba>=0.42.1
 
-# 文档生成
-# sphinx>=5.0.0
-# sphinx-rtd-theme>=1.0.0
