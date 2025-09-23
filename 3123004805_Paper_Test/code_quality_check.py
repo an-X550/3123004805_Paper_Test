@@ -100,11 +100,11 @@ def check_code_issues(content: str) -> List[str]:
         if 'TODO' in line or 'FIXME' in line:
             issues.append(f"第{i}行包含TODO/FIXME")
         
-        # 检查硬编码的魔法数字
+        # 检查硬编码的数字
         magic_numbers = re.findall(r'\b\d{2,}\b', line)
         for num in magic_numbers:
             if int(num) > 10 and 'line' not in line.lower():
-                issues.append(f"第{i}行可能包含魔法数字: {num}")
+                issues.append(f"第{i}行可能包含数字: {num}")
     
     return issues
 
@@ -112,61 +112,61 @@ def generate_quality_report(file_path: str):
     """生成代码质量报告"""
     
     print("=" * 80)
-    print("🔍 论文查重系统 - 代码质量分析报告")
+    print("论文查重系统 - 代码质量分析报告")
     print("=" * 80)
     print()
     
     if not os.path.exists(file_path):
-        print(f"❌ 文件不存在: {file_path}")
+        print(f"文件不存在: {file_path}")
         return
     
     try:
         results = analyze_code_quality(file_path)
         
-        print(f"📁 分析文件: {file_path}")
-        print(f"📏 文件大小: {results['file_size']} 字符")
-        print(f"📋 代码行数: {results['line_count']} 行")
-        print(f"🔧 函数数量: {results['function_count']} 个")
-        print(f"🏗️  类数量: {results['class_count']} 个")
+        print(f"分析文件: {file_path}")
+        print(f"文件大小: {results['file_size']} 字符")
+        print(f"代码行数: {results['line_count']} 行")
+        print(f"函数数量: {results['function_count']} 个")
+        print(f"类数量: {results['class_count']} 个")
         print()
         
         # 质量指标
-        print("📊 质量指标:")
+        print("质量指标:")
         print("-" * 40)
         
         docstring_score = results['docstring_coverage']
-        print(f"📝 文档字符串覆盖率: {docstring_score:.1f}%", end="")
+        print(f"文档字符串覆盖率: {docstring_score:.1f}%", end="")
         if docstring_score >= 90:
-            print(" ✅ 优秀")
+            print(" 优秀")
         elif docstring_score >= 70:
-            print(" ⚠️  良好")
+            print(" 良好")
         else:
-            print(" ❌ 需改进")
+            print(" 需改进")
         
         hints_score = results['type_hints_coverage']
-        print(f"🏷️  类型提示覆盖率: {hints_score:.1f}%", end="")
+        print(f"类型提示覆盖率: {hints_score:.1f}%", end="")
         if hints_score >= 90:
-            print(" ✅ 优秀")
+            print(" 优秀")
         elif hints_score >= 70:
-            print(" ⚠️  良好")
+            print(" 良好")
         else:
-            print(" ❌ 需改进")
+            print(" 需改进")
         
         complexity = results['complexity_score']
-        print(f"🔀 代码复杂度: {complexity}", end="")
+        print(f"代码复杂度: {complexity}", end="")
         if complexity <= 5:
-            print(" ✅ 简单")
+            print(" 简单")
         elif complexity <= 10:
-            print(" ⚠️  中等")
+            print("  中等")
         else:
-            print(" ❌ 复杂")
+            print(" 复杂")
         
         print()
         
         # 问题列表
         issues = results['issues']
         if issues:
-            print("⚠️  发现的问题:")
+            print("发现的问题:")
             print("-" * 40)
             for issue in issues[:10]:  # 只显示前10个问题
                 print(f"  • {issue}")
@@ -174,25 +174,25 @@ def generate_quality_report(file_path: str):
             if len(issues) > 10:
                 print(f"  ... 还有 {len(issues) - 10} 个问题")
         else:
-            print("✅ 未发现明显问题")
+            print("未发现明显问题")
         
         print()
         
         # 总体评分
         total_score = calculate_total_score(results)
-        print(f"🏆 总体评分: {total_score:.1f}/100")
+        print(f"总体评分: {total_score:.1f}/100")
         
         if total_score >= 90:
-            print("🎉 代码质量优秀！")
+            print("代码质量优秀！")
         elif total_score >= 80:
-            print("👍 代码质量良好")
+            print("代码质量良好")
         elif total_score >= 70:
-            print("⚠️  代码质量一般，建议改进")
+            print(" 代码质量一般，建议改进")
         else:
-            print("❌ 代码质量需要大幅改进")
+            print("代码质量需要大幅改进")
         
         print()
-        print("💡 改进建议:")
+        print("改进建议:")
         print("-" * 40)
         
         if docstring_score < 90:
@@ -207,10 +207,10 @@ def generate_quality_report(file_path: str):
         if len(issues) > 0:
             print("  • 修复代码中发现的问题")
         
-        print("  • 使用专业工具如pylint、flake8进行更详细的分析")
+        print("  • 使用专业工具进行更详细的分析")
         
     except Exception as e:
-        print(f"❌ 分析失败: {e}")
+        print(f"分析失败: {e}")
 
 def calculate_total_score(results: Dict[str, any]) -> float:
     """计算总体评分"""
